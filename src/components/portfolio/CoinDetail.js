@@ -68,7 +68,7 @@ const coinDetails = {
   'realio-network': {
     title: "Realio Network: Tokenizing Real-World Assets",
     symbol: "RIO",
-    image: "https://assets.coingecko.com/coins/images/14057/large/realio.png",
+    image: "https://assets.coingecko.com/coins/images/12206/standard/Rio.png?1696512042",
     content: {
       overview: "Realio Network (RIO) is a digital asset issuance and investment platform focused on real estate and other real-world assets. It bridges traditional finance with blockchain technology.",
       keyFeatures: [
@@ -89,7 +89,7 @@ const coinDetails = {
   gamercoin: {
     title: "GamerCoin: Gaming Meets Blockchain",
     symbol: "GHX",
-    image: "https://assets.coingecko.com/coins/images/14714/large/14714.png",
+    image: "https://assets.coingecko.com/coins/images/14714/standard/ghx_icon.png?1696514385",
     content: {
       overview: "GamerCoin (GHX) is a cryptocurrency designed for the gaming industry, enabling new possibilities for in-game economies and player rewards.",
       keyFeatures: [
@@ -110,7 +110,7 @@ const coinDetails = {
   argocoin: {
     title: "ArgoCoin: Innovation in Digital Assets",
     symbol: "AGC",
-    image: "https://assets.coingecko.com/coins/images/21138/large/argo.png",
+    image: "https://assets.coingecko.com/coins/images/34256/standard/Argocoin.jpg?1729941668",
     content: {
       overview: "ArgoCoin (AGC) represents a new approach to digital asset management and blockchain technology integration.",
       keyFeatures: [
@@ -131,7 +131,7 @@ const coinDetails = {
   panoverse: {
     title: "Panoverse: Building the Digital Metaverse",
     symbol: "PANO",
-    image: "https://assets.coingecko.com/coins/images/28494/large/pano.png",
+    image: "https://assets.coingecko.com/coins/images/32812/standard/1000366603.jpg?1719371841",
     content: {
       overview: "Panoverse (PANO) is a metaverse project focusing on creating immersive digital experiences and virtual worlds.",
       keyFeatures: [
