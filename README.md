@@ -1,70 +1,442 @@
-# Getting Started with Create React App
+# Quotum Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive cryptocurrency content management and analytics platform.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Modern React frontend with clean UI
+- Laravel backend with RESTful API
+- Role-based authentication system
+- Real-time cryptocurrency data integration
+- Content Management System (CMS)
+- User activity tracking
+- Performance metrics
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js 16+
+- PHP 8.1+
+- Composer
+- MySQL 8.0+
 
-### `npm test`
+### Frontend Setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Navigate to the project root:
+```bash
+cd quotum-dashboard
+```
 
-### `npm run build`
+2. Install dependencies:
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Start the development server:
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The app will be available at http://localhost:3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend Setup
 
-### `npm run eject`
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install PHP dependencies:
+```bash
+composer install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Copy environment file:
+```bash
+cp .env.example .env
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Configure your database in `.env`:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=quotum_dashboard
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. Generate application key:
+```bash
+php artisan key:generate
+```
 
-## Learn More
+6. Run migrations:
+```bash
+php artisan migrate
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+7. Start the server:
+```bash
+php artisan serve
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API Documentation
 
-### Code Splitting
+All API endpoints are prefixed with `/api/dashboard`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Authentication Endpoints
 
-### Analyzing the Bundle Size
+#### Register User
+```
+POST /api/dashboard/auth/register
+```
+Request body:
+```json
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "password_confirmation": "string"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Login
+```
+POST /api/dashboard/auth/login
+```
+Request body:
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
 
-### Making a Progressive Web App
+### Dashboard Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Get Dashboard Statistics
+```
+GET /api/dashboard/stats
+```
+Response:
+```json
+{
+  "completed_projects": "number",
+  "projects_growth": "number",
+  "performance": "number",
+  "performance_change": "number"
+}
+```
 
-### Advanced Configuration
+#### Get Recent Content
+```
+GET /api/dashboard/content/recent
+```
+Response:
+```json
+[
+  {
+    "id": "number",
+    "title": "string",
+    "content": "string",
+    "status": "string",
+    "coin": {
+      "id": "number",
+      "name": "string",
+      "symbol": "string"
+    },
+    "images": [
+      {
+        "id": "number",
+        "url": "string"
+      }
+    ],
+    "created_at": "datetime"
+  }
+]
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Get Recent Activity
+```
+GET /api/dashboard/stats/recent-activity
+```
+Response:
+```json
+[
+  {
+    "id": "number",
+    "user": "string",
+    "action": "string",
+    "timestamp": "datetime"
+  }
+]
+```
 
-### Deployment
+### Content Management Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Get All Posts
+```
+GET /api/dashboard/content/posts
+```
 
-### `npm run build` fails to minify
+#### Create Post
+```
+POST /api/dashboard/content/posts
+```
+Request body (multipart/form-data):
+```json
+{
+  "title": "string",
+  "content": "string",
+  "coin_id": "number",
+  "status": "enum(draft,published)",
+  "images[]": "file[]"
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Response:
+```json
+{
+  "id": "number",
+  "title": "string",
+  "content": "string",
+  "status": "string",
+  "coin": {
+    "id": "number",
+    "name": "string",
+    "symbol": "string"
+  },
+  "images": [
+    {
+      "id": "number",
+      "url": "string"
+    }
+  ],
+  "created_at": "datetime"
+}
+```
+
+#### Update Post
+```
+PUT /api/dashboard/content/posts/{id}
+```
+
+#### Delete Post
+```
+DELETE /api/dashboard/content/posts/{id}
+```
+
+### Coin Management Endpoints
+
+#### Get All Coins
+```
+GET /api/dashboard/coins
+```
+
+#### Get Coin Details
+```
+GET /api/dashboard/coins/{id}
+```
+
+#### Get Coin Posts
+```
+GET /api/dashboard/coins/{id}/posts
+```
+
+#### Create Coin Post
+```
+POST /api/dashboard/coins/{id}/posts
+```
+
+### Admin Endpoints
+
+#### Get Users List
+```
+GET /api/dashboard/admin/users
+```
+Response:
+```json
+[
+  {
+    "id": "number",
+    "name": "string",
+    "email": "string",
+    "is_active": "boolean",
+    "created_at": "datetime"
+  }
+]
+```
+
+#### Activate/Deactivate User
+```
+POST /api/dashboard/admin/users/{user}/activate
+POST /api/dashboard/admin/users/{user}/deactivate
+```
+
+#### Get Activity Log
+```
+GET /api/dashboard/admin/activity
+```
+
+#### Manage Coins (Admin Only)
+```
+POST /api/dashboard/admin/coins
+```
+Request body:
+```json
+{
+  "name": "string",
+  "symbol": "string",
+  "coingecko_id": "string",
+  "description": "string",
+  "image_url": "string"
+}
+```
+Response:
+```json
+{
+  "id": "number",
+  "name": "string",
+  "symbol": "string",
+  "coingecko_id": "string",
+  "description": "string",
+  "image_url": "string",
+  "current_price": "number",
+  "price_change_24h": "number",
+  "created_at": "datetime",
+  "updated_at": "datetime"
+}
+```
+
+```
+PUT /api/dashboard/admin/coins/{id}
+```
+Request body: Same as POST request
+Response: Same as POST response
+
+```
+DELETE /api/dashboard/admin/coins/{id}
+```
+Response:
+```json
+{
+  "message": "Coin deleted successfully"
+}
+```
+
+#### System Settings
+```
+GET /api/dashboard/admin/settings
+```
+Response:
+```json
+{
+  "price_update_interval": "number",
+  "default_post_status": "string",
+  "max_images_per_post": "number",
+  "maintenance_mode": "boolean"
+}
+```
+
+```
+PUT /api/dashboard/admin/settings
+```
+Request body:
+```json
+{
+  "price_update_interval": "number",
+  "default_post_status": "string",
+  "max_images_per_post": "number",
+  "maintenance_mode": "boolean"
+}
+```
+Response: Same as GET response
+
+### Background Jobs
+
+#### Update Coin Prices
+```
+POST /api/dashboard/jobs/update-coin-prices
+```
+Response:
+```json
+{
+  "status": "string",
+  "message": "string",
+  "updated_coins": "number",
+  "failed_coins": "number",
+  "next_update": "datetime"
+}
+```
+
+#### Get Job Status
+```
+GET /api/dashboard/jobs/status
+```
+Response:
+```json
+{
+  "price_update_job": {
+    "status": "string",
+    "last_run": "datetime",
+    "next_run": "datetime",
+    "success_rate": "number"
+  },
+  "active_jobs": "number",
+  "queued_jobs": "number",
+  "failed_jobs": "number"
+}
+```
+
+The API uses Laravel Sanctum for authentication. Include the authentication token in the request headers:
+
+```
+Authorization: Bearer {your_token}
+```
+
+## Role-Based Access Control
+
+The application implements role-based access control with the following roles:
+- Admin: Full access to all features
+- User: Access to public content and personal dashboard
+
+## Error Handling
+
+The API returns standard HTTP status codes:
+- 200: Success
+- 400: Bad Request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not Found
+- 500: Internal Server Error
+
+Error responses follow this format:
+```json
+{
+  "message": "Error message",
+  "errors": {
+    "field": ["Error details"]
+  }
+}
+```
+
+## Development
+
+### Code Style
+- Frontend: ESLint with Airbnb configuration
+- Backend: PSR-12 coding standard
+
+### Testing
+```bash
+# Frontend tests
+npm test
+
+# Backend tests
+php artisan test
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
