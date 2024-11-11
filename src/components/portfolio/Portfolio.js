@@ -34,7 +34,7 @@ const Portfolio = () => {
       id: 'realio-network',
       name: 'Realio Network',
       symbol: 'RIO',
-      image: 'https://assets.coingecko.com/coins/images/14057/large/realio.png',
+      image: 'https://assets.coingecko.com/coins/images/12206/standard/Rio.png?1696512042',
       current_price: 0.234,
       price_change_percentage_24h: -1.2
     },
@@ -42,7 +42,7 @@ const Portfolio = () => {
       id: 'gamercoin',
       name: 'GamerCoin',
       symbol: 'GHX',
-      image: 'https://assets.coingecko.com/coins/images/14714/large/14714.png',
+      image: 'https://assets.coingecko.com/coins/images/14714/standard/ghx_icon.png?1696514385',
       current_price: 0.0067,
       price_change_percentage_24h: -0.8
     },
@@ -50,7 +50,7 @@ const Portfolio = () => {
       id: 'argocoin',
       name: 'ArgoCoin',
       symbol: 'AGC',
-      image: 'https://assets.coingecko.com/coins/images/21138/large/argo.png',
+      image: 'https://assets.coingecko.com/coins/images/34256/standard/Argocoin.jpg?1729941668',
       current_price: 0.089,
       price_change_percentage_24h: 1.5
     },
@@ -58,7 +58,7 @@ const Portfolio = () => {
       id: 'panoverse',
       name: 'Panoverse',
       symbol: 'PANO',
-      image: 'https://assets.coingecko.com/coins/images/28494/large/pano.png',
+      image: 'https://assets.coingecko.com/coins/images/32812/standard/1000366603.jpg?1719371841',
       current_price: 0.045,
       price_change_percentage_24h: -2.1
     },
