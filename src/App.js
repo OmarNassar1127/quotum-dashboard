@@ -6,6 +6,7 @@ import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import Portfolio from './components/portfolio/Portfolio';
 import Videos from './components/videos/Videos';
+import CoinDetail from './components/portfolio/CoinDetail';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="portfolio" element={<Portfolio />} />
+          <Route path="coin/:coinId" element={<CoinDetail />} />
           <Route path="videos" element={<Videos />} />
           <Route path="help" element={<div>Help Page</div>} />
         </Route>
