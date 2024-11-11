@@ -1,53 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Loader } from 'lucide-react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 
 const Portfolio = () => {
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCoins = async () => {
-      try {
-        const response = await fetch(
-          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=8&page=1&sparkline=false'
-        );
-        if (!response.ok) {
-          throw new Error('Failed to fetch coin data');
-        }
-        const data = await response.json();
-        setCoins(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
-    fetchCoins();
-  }, []);
+  const coins = [
+    {
+      id: 'bitcoin',
+      name: 'Bitcoin',
+      symbol: 'BTC',
+      image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png',
+      current_price: 36789.52,
+      price_change_percentage_24h: 2.5
+    },
+    {
+      id: 'ethereum',
+      name: 'Ethereum',
+      symbol: 'ETH',
+      image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
+      current_price: 2045.67,
+      price_change_percentage_24h: 1.8
+    },
+    {
+      id: 'tether',
+      name: 'Tether',
+      symbol: 'USDT',
+      image: 'https://assets.coingecko.com/coins/images/325/large/Tether.png',
+      current_price: 1.00,
+      price_change_percentage_24h: 0.1
+    },
+    {
+      id: 'realio-network',
+      name: 'Realio Network',
+      symbol: 'RIO',
+      image: 'https://assets.coingecko.com/coins/images/14057/large/realio.png',
+      current_price: 0.234,
+      price_change_percentage_24h: -1.2
+    },
+    {
+      id: 'gamercoin',
+      name: 'GamerCoin',
+      symbol: 'GHX',
+      image: 'https://assets.coingecko.com/coins/images/14714/large/14714.png',
+      current_price: 0.0067,
+      price_change_percentage_24h: -0.8
+    },
+    {
+      id: 'argocoin',
+      name: 'ArgoCoin',
+      symbol: 'AGC',
+      image: 'https://assets.coingecko.com/coins/images/21138/large/argo.png',
+      current_price: 0.089,
+      price_change_percentage_24h: 1.5
+    },
+    {
+      id: 'panoverse',
+      name: 'Panoverse',
+      symbol: 'PANO',
+      image: 'https://assets.coingecko.com/coins/images/28494/large/pano.png',
+      current_price: 0.045,
+      price_change_percentage_24h: -2.1
+    },
+    {
+      id: 'solana',
+      name: 'Solana',
+      symbol: 'SOL',
+      image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png',
+      current_price: 58.23,
+      price_change_percentage_24h: 3.2
+    }
+  ];
 
   const handleCoinClick = (coinId) => {
     navigate(`/coin/${coinId}`);
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Loader className="h-8 w-8 text-blue-500 animate-spin" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-red-600 p-4">
-        <p>Error loading coins: {error}</p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6 p-6">
@@ -59,7 +86,7 @@ const Portfolio = () => {
             onClick={() => handleCoinClick(coin.id)}
             className="bg-white shadow-sm rounded-lg p-6 hover:shadow-lg transition-all duration-200 cursor-pointer"
           >
-            <div className="space-y-4">
+            <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-center">
                 <img
                   src={coin.image}
@@ -69,7 +96,7 @@ const Portfolio = () => {
               </div>
               <div className="text-center">
                 <h3 className="text-lg font-semibold text-gray-900">{coin.name}</h3>
-                <p className="text-sm text-gray-500">{coin.symbol.toUpperCase()}</p>
+                <p className="text-sm text-gray-500">{coin.symbol}</p>
               </div>
               <div className="text-center space-y-2">
                 <p className="text-lg font-medium text-gray-900">
