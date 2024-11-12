@@ -1,80 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { coinService } from '../../services/api';
 
 const Portfolio = () => {
   const navigate = useNavigate();
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const coins = [
-    {
-      id: 'bitcoin',
-      name: 'Bitcoin',
-      symbol: 'BTC',
-      image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png',
-      current_price: 36789.52,
-      price_change_percentage_24h: 2.5
-    },
-    {
-      id: 'ethereum',
-      name: 'Ethereum',
-      symbol: 'ETH',
-      image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png',
-      current_price: 2045.67,
-      price_change_percentage_24h: 1.8
-    },
-    {
-      id: 'tether',
-      name: 'Tether',
-      symbol: 'USDT',
-      image: 'https://assets.coingecko.com/coins/images/325/large/Tether.png',
-      current_price: 1.00,
-      price_change_percentage_24h: 0.1
-    },
-    {
-      id: 'realio-network',
-      name: 'Realio Network',
-      symbol: 'RIO',
-      image: 'https://assets.coingecko.com/coins/images/12206/standard/Rio.png?1696512042',
-      current_price: 0.234,
-      price_change_percentage_24h: -1.2
-    },
-    {
-      id: 'gamercoin',
-      name: 'GamerCoin',
-      symbol: 'GHX',
-      image: 'https://assets.coingecko.com/coins/images/14714/standard/ghx_icon.png?1696514385',
-      current_price: 0.0067,
-      price_change_percentage_24h: -0.8
-    },
-    {
-      id: 'argocoin',
-      name: 'ArgoCoin',
-      symbol: 'AGC',
-      image: 'https://assets.coingecko.com/coins/images/34256/standard/Argocoin.jpg?1729941668',
-      current_price: 0.089,
-      price_change_percentage_24h: 1.5
-    },
-    {
-      id: 'panoverse',
-      name: 'Panoverse',
-      symbol: 'PANO',
-      image: 'https://assets.coingecko.com/coins/images/32812/standard/1000366603.jpg?1719371841',
-      current_price: 0.045,
-      price_change_percentage_24h: -2.1
-    },
-    {
-      id: 'solana',
-      name: 'Solana',
-      symbol: 'SOL',
-      image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png',
-      current_price: 58.23,
-      price_change_percentage_24h: 3.2
-    }
-  ];
+  useEffect(() => {
+    const fetchCoins = async () => {
+      try {
+        setLoading(true);
+        const response = await coinService.getAllCoins();
+        setCoins(response);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch coins. Please try again later.');
+        console.error('Error fetching coins:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCoins();
+  }, []);
 
   const handleCoinClick = (coinId) => {
     navigate(`/coin/${coinId}`);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-600 text-center">
+          <p className="text-xl font-semibold">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-red-100 text-red-800 rounded-md hover:bg-red-200"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 p-6">
@@ -89,7 +68,7 @@ const Portfolio = () => {
             <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-center">
                 <img
-                  src={coin.image}
+                  src={coin.image_url}
                   alt={coin.name}
                   className="h-12 w-12 rounded-full"
                 />
